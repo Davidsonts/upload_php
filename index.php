@@ -24,9 +24,12 @@ if (!$connection) {
 $dir = $_ENV['DIR'];
 $upload_dir = $_ENV['UPLOAD_DIR'];
 
+if (!file_exists($upload_dir)) {
+    mkdir($upload_dir, 0777, true);
+}
+
 $files = scandir($dir);
 $path = pathinfo(__FILE__);
-
 
 // print_r($dir);
 // echo PHP_EOL;
