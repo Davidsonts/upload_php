@@ -47,11 +47,12 @@ foreach ($files as $key => $file) {
 
     if(is_file($file) == true && exif_imagetype($file)){
 
-        $name_new = date('Ymd_his').'_'.$file;
+        $ext = substr($file, strrpos($file, '.') + 1);
+        $name_new = time().uniqid(md5()).'.'.$ext;
 
         if(copy($path['dirname'].'/'.$file, $upload_dir.$name_new)){
                 $array = ['name_old' => $file, 'name_new' => $name_new,  'local_old' => $path['dirname'], 'local_new' => $upload_dir, ];
-                // print_r($array);exit();
+
                 $res = pg_insert($db, 'images', $array);
 
                 if ($res) {
