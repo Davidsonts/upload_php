@@ -1,6 +1,6 @@
 <?php
-ini_set('display_errors', '0'); // 1 OR 0
-ini_set('display_startup_errors', '0'); // 1 OR 0
+ini_set('display_errors', 0); // 1 OR 0
+ini_set('display_startup_errors', 0); // 1 OR 0
 error_reporting(0); // E_ALL OR 0
 
 include_once __DIR__ . '/vendor/autoload.php';
@@ -22,6 +22,7 @@ if (!$connection) {
 }
 
 $dir = $_ENV['DIR'];
+
 $upload_dir = $_ENV['UPLOAD_DIR'];
 
 if (!file_exists($upload_dir)) {
@@ -29,7 +30,6 @@ if (!file_exists($upload_dir)) {
 }
 
 $files = scandir($dir);
-$path = pathinfo(__FILE__);
 
 // print_r($dir);
 // echo PHP_EOL;
@@ -42,16 +42,15 @@ $path = pathinfo(__FILE__);
 // print_r($path['dirname']);
 // echo PHP_EOL;
 
-
 foreach ($files as $key => $file) {
 
-    if(is_file($file) == true && exif_imagetype($file)){
+    if(is_file($dir.$file) == true && exif_imagetype($dir.$file)) {
 
-        $ext = substr($file, strrpos($file, '.') + 1);
+        $ext = substr($dir.$file, strrpos($dir.$file, '.') + 1);
         $name_new = time().uniqid(md5()).'.'.$ext;
-
-        if(copy($path['dirname'].'/'.$file, $upload_dir.$name_new)){
-                $array = ['name_old' => $file, 'name_new' => $name_new,  'local_old' => $path['dirname'], 'local_new' => $upload_dir, ];
+  
+        if(copy($dir.$file, $upload_dir.$name_new)){
+                $array = ['name_old' => $file, 'name_new' => $name_new,  'local_old' => $dir, 'local_new' => $upload_dir, ];
 
                 $res = pg_insert($db, 'images', $array);
 
