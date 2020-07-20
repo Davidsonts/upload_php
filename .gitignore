@@ -4,6 +4,6 @@
 !index.php
 !composer.json
 !composer.lock
-!env.exemple
+!.env.exemple
 !.gitignore
 !README.md
