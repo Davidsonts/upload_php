@@ -1,0 +1,9 @@
+# Ignore everything:
+*
+# Except for wordpress themes:
+!index.php
+!composer.json
+!composer.lock
+!env.exemple
+!.gitignore
+!README.md
