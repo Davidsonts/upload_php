@@ -50,7 +50,7 @@ foreach ($files as $key => $file) {
         $name_new = time().uniqid(md5()).'.'.$ext;
   
         if(copy($dir.$file, $upload_dir.$name_new)){
-                $array = ['name_old' => $file, 'name_new' => $name_new,  'local_old' => $dir, 'local_new' => $upload_dir, ];
+                $array = ['name_old' => $file, 'name_new' => $name_new, 'local_old' => $dir, 'local_new' => $upload_dir];
 
                 $res = pg_insert($db, 'images', $array);
 
